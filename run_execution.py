@@ -1,3 +1,5 @@
+# Ruta del archivo: run_execution.py
+
 from Agents.RandomAgent import RandomAgent as ra
 from Agents.AdrianHerasAgent import AdrianHerasAgent as aha
 from Agents.AlexPastorAgent import AlexPastorAgent as apa
@@ -8,9 +10,11 @@ from Agents.EdoAgent import EdoAgent as ea
 from Agents.PabloAleixAlexAgent import PabloAleixAlexAgent as paaa
 from Agents.SigmaAgent import SigmaAgent as sa
 from Agents.TristanAgent import TristanAgent as ta
+from Agents.ChrisAgent import ChrisAgent
 
 from Managers.GameDirector import GameDirector
-AGENTS = [ra, aha, apa, apja]
+# CAMBIO 1: Incluimos a ChrisAgent en la lista de jugadores que participan en la partida
+AGENTS = [ra, aha, apa, ChrisAgent] 
 
 def main():
     """
@@ -21,9 +25,10 @@ def main():
     El fitness se determina actualmente por si el 'chosen_agent' gana la partida.
     """
     all_agents = AGENTS  # Lista de todos los agentes participantes en la partida.
-    chosen_agent = aha   # Agente específico cuyo rendimiento se está evaluando.
+    # CAMBIO 2: Evaluamos el rendimiento de tu agente en lugar del de aha
+    chosen_agent = ChrisAgent   
 
-    # Ejemplo de ejecuciÃ³n
+    # Ejemplo de ejecución
     try:
         game_director = GameDirector(agents=all_agents, max_rounds=200, store_trace=False)
         game_trace = game_director.game_start(print_outcome=False)
@@ -31,7 +36,7 @@ def main():
         print(f"Error: {e}")
         return 0
 
-    # AnÃ¡lisis de resultados
+    # Análisis de resultados
     last_round = max(game_trace["game"].keys(), key=lambda r: int(r.split("_")[-1]))
     last_turn = max(game_trace["game"][last_round].keys(), key=lambda t: int(t.split("_")[-1].lstrip("P")))
     victory_points = game_trace["game"][last_round][last_turn]["end_turn"]["victory_points"]
