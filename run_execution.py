@@ -8,9 +8,19 @@ from Agents.EdoAgent import EdoAgent as ea
 from Agents.PabloAleixAlexAgent import PabloAleixAlexAgent as paaa
 from Agents.SigmaAgent import SigmaAgent as sa
 from Agents.TristanAgent import TristanAgent as ta
-
+from Agents.CMMAgent import CMMAgent as cmm
+import json
 from Managers.GameDirector import GameDirector
-AGENTS = [ra, aha, apa, apja]
+
+# Cargar el cromosoma entrenado
+with open("best_chromosome.json", "r") as f:
+    best_chrom = json.load(f)
+
+class TrainedAgent(cmm):
+    def __init__(self, agent_id):
+        super().__init__(agent_id, chromosome=best_chrom)
+
+AGENTS = [ca, TrainedAgent, aha, ta]
 
 def main():
     """
@@ -21,7 +31,7 @@ def main():
     El fitness se determina actualmente por si el 'chosen_agent' gana la partida.
     """
     all_agents = AGENTS  # Lista de todos los agentes participantes en la partida.
-    chosen_agent = aha   # Agente específico cuyo rendimiento se está evaluando.
+    chosen_agent = TrainedAgent   # Agente específico cuyo rendimiento se está evaluando.
 
     # Ejemplo de ejecuciÃ³n
     try:

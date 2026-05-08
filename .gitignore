@@ -22,6 +22,8 @@ Thumbs.db
 # Trazas generadas
 TraceLoader/Traces/
 *.json
+!docs/*.json
+!docs/**/*.json
 !Game/test_game_fixed.json
 
 # Debug/audit
